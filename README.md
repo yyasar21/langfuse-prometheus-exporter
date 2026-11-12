@@ -109,6 +109,20 @@ sum(langfuse_usage_by_type_total{usage_type="input_cached_tokens"})
 sum(langfuse_observations_total{type="GENERATION",level="ERROR"}) / sum(langfuse_observations_total{type="GENERATION"})
 ```
 
+## Grafana dashboard
+
+[](grafana/langfuse-dashboard.json): "Langfuse Neon", 73 panels
+over every metric above (pulse stats, traffic, latency, tokens and speed, tools, sessions,
+breakdowns, cost and scores, pipeline health), neon palette. Import it in Grafana (Dashboards >
+New > Import) and pick your Prometheus-type data source in the **Data source** variable; the
+**Model** and **Window** variables filter the panels.
+
+- The "Pipeline health" panels expect the scrape job to be named .
+- The four histogram panels sort their bands with  (MetricsQL), so they
+  need VictoriaMetrics. On Prometheus, use  with
+  , or drop the function (bands then show
+  unsorted). Everything else is plain PromQL.
+
 ## API quirks it works around
 
 Found while checking every number against the Langfuse UI:
